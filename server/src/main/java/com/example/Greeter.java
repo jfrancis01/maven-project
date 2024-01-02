@@ -12,8 +12,9 @@ public class Greeter {
 
   }
   /**
-   * 
-   * @param Joel Francis
+   *
+   * @uthor Joel Francis
+   * @param string
    * @return string
    */
   public final String greet(final String someone) {
