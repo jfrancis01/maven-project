@@ -1,17 +1,33 @@
 pipeline {
     agent any
-    tools{
-        maven 'localMaven'
+
+    parameters {
+         string(name: 'tomcat_dev', defaultValue: '18.227.105.162', description: 'Staging Server')
     }
-    stages{
+
+    triggers {
+         pollSCM('* * * * *')
+     }
+
+stages{
         stage('Build'){
-            steps{
+            steps {
                 sh 'mvn clean package'
             }
-            post{
-                success{
+            post {
+                success {
                     echo 'Now Archiving...'
                     archiveArtifacts artifacts: '**/target/*.war'
+                }
+            }
+        }
+
+        stage ('Deployments'){
+            parallel{
+                stage ('Deploy to Staging'){
+                    steps {
+                        sh "scp -i ./Jenkins_Tutorial/tomcatdeployment.pem **/target/*.war ec2-user@${params.tomcat_dev}:/var/lib/tomcat/webapps"
+                    }
                 }
             }
         }
