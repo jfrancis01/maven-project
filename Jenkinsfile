@@ -26,7 +26,7 @@ stages{
             parallel{
                 stage ('Deploy to Staging'){
                     steps {
-                        sh "scp -v -o StrictHostKeyChecking=no -i /var/lib/jenkins/tomcatdeployment.pem /var/lib/jenkins/workspace/FullyAutomated/webapp/target/target/*.war ec2-user@${params.tomcat_dev}:/opt/tomcat/apache-tomcat-9.0.83/webapps"
+                        sh "scp -v -o StrictHostKeyChecking=no -i /var/lib/jenkins/tomcatdeployment.pem /var/lib/jenkins/workspace/FullyAutomated/webapp/target/*.war ec2-user@${params.tomcat_dev}:/opt/tomcat/apache-tomcat-9.0.83/webapps"
                     }
                 }
             }
